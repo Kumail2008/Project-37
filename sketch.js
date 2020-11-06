@@ -34,13 +34,14 @@ function setup() {
   PLAY=1;
   END=0;
   gameState=PLAY;
-  backGround = createSprite(500,450);
-  background.scale = 0.1
+  backGround = createSprite(500,350);
+  backGround.scale = 0.7;
+  backGround.x = backGround.width/2;
   astronaut = createSprite(250,530,20,50);
-  console.log(astronaut.y);
+  //console.log(astronaut.y);
   astronaut.addImage("running", astronaut_running);
   astronaut.addImage("collided", astronaut_collided);
-  astronaut.scale = 0.1;
+  astronaut.scale = 0.08;
   
   
   ground = createSprite(300,530,400,20);
@@ -56,7 +57,7 @@ function setup() {
 
 }
 function draw() {
-
+background(0);
  
   backGround.addImage(backgroundImg);
   
@@ -67,16 +68,15 @@ function draw() {
   if(gameState===PLAY){
   score = score + Math.round(getFrameRate()/60); 
   
-  backGround.velocityX =+8;
-  //if(backGround.x ===0){
+  backGround.x = camera.position.x;
+  //if(backGround.x <0){
   //backGround.x = backGround.width/2;
   //}  
   ground.velocityX=-6;
-  camera.position.x = camera.position.x + 8;
+  //camera.position.x = camera.position.x + 8;
   astronaut.x = camera.position.x;
- 
   ground.x = camera.position.x;
-    console.log(camera.position.x);
+    //console.log(camera.position.x);
     
     if(keyDown("space")&&astronaut.y  <520) {
     astronaut.velocityY = -10;
@@ -116,7 +116,7 @@ function draw() {
        
   }
   
-  
+ 
 
   drawSprites();
 }
@@ -134,28 +134,25 @@ function reset(){
   score = 0;
   
 }
-
-
-
-
-
-
-
 function spawnObstacles() {
-  if(camera.position.x === camera.position.x +90) {
+  if(camera.position.y < displayHeight-250) {
     var obstacle = createSprite(600,505,5,40);
-    obstacle.velocityX = -4;
+    obstacle.y = (random(100,250));
+    obstacle.velocityX = -8;
     obstacle.addImage(obstacleImg);
     //generate random obstacles
-    
+    console.log();
     
     //assign scale and lifetime to the obstacle           
-    obstacle.scale = 0.1;
-    obstacle.lifetime = 300;
+    obstacle.scale = 0.08;
+    obstacle.lifetime = 50;
     //add each obstacle to the group
     obstaclesGroup.add(obstacle);
   }
 }
+
+//camera.position.y <displayHeight-250
+
 
 
 
